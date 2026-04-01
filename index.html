@@ -2,25 +2,12 @@
 <html>
 <body>
 <script>
-  // Thunkable manda la URI de la foto acá
-  function receiveMessage(msg) {
-    var uri = msg; // la URI local de la foto, ej: file:///...
-    
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", uri, true);
-    xhr.responseType = "blob";
-    xhr.onload = function() {
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        // result es "data:image/jpeg;base64,XXXX..."
-        var base64 = reader.result.split(",")[1];
-        // lo devolvemos a Thunkable
-        window.ReactNativeWebView.postMessage(base64);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.send();
-  }
+function receiveMessage(msg) {
+  fetch("https://iassa-sa.com.ar/pioneros/log.php?msg=recibido")
+    .then(function() {
+      window.ReactNativeWebView.postMessage("llamado_ok");
+    });
+}
 </script>
 </body>
 </html>
