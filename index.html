@@ -9,7 +9,7 @@ function receiveMessage(msg) {
       var reader = new FileReader();
       reader.onloadend = function() {
         var base64 = reader.result.split(",")[1];
-        fetch("TU_URL_APPS_SCRIPT", {
+        fetch("https://script.google.com/macros/s/AKfycbxc6i0AvhPjVNu1LcPYfoxhHH8AI9ixLRYPkoKl_llav5Mnlig4GWbpJI7GYJrB8t5o/exec", {
           method: "POST",
           body: JSON.stringify({image: base64, filename: "foto.jpg"})
         })
