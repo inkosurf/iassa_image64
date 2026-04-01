@@ -2,11 +2,11 @@
 <html>
 <body>
 <script>
+fetch("https://iassa-sa.com.ar/pioneros/log.php");
+
 function receiveMessage(msg) {
-  fetch("https://iassa-sa.com.ar/pioneros/log.php?msg=recibido")
-    .then(function() {
-      window.ReactNativeWebView.postMessage("llamado_ok");
-    });
+  fetch("https://iassa-sa.com.ar/pioneros/log.php");
+  window.ReactNativeWebView.postMessage("ok");
 }
 </script>
 </body>
