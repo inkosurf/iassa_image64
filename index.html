@@ -3,26 +3,23 @@
 <body>
 <script>
 function receiveMessage(msg) {
-  fetch(msg)
-    .then(r => r.blob())
-    .then(blob => {
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        var base64 = reader.result.split(",")[1];
-        fetch("https://script.google.com/macros/s/AKfycbxc6i0AvhPjVNu1LcPYfoxhHH8AI9ixLRYPkoKl_llav5Mnlig4GWbpJI7GYJrB8t5o/exec", {
-          method: "POST",
-          body: JSON.stringify({image: base64, filename: "foto.jpg"})
-        })
-        .then(r => r.text())
-        .then(resp => {
-          window.ReactNativeWebView.postMessage(resp);
-        });
-      };
-      reader.readAsDataURL(blob);
-    })
-    .catch(function(err) {
-      window.ReactNativeWebView.postMessage("ERROR:" + err.message);
-    });
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", msg, true);
+  xhr.responseType = "blob";
+  xhr.onload = function() {
+    var reader = new FileReader();
+    reader.onloadend = function() {
+      var base64 = reader.result.split(",")[1];
+      fetch("https://script.google.com/macros/s/AKfycbxc6i0AvhPjVNu1LcPYfoxhHH8AI9ixLRYPkoKl_llav5Mnlig4GWbpJI7GYJrB8t5o/exec", {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({image: base64, filename: "foto.jpg"})
+      });
+      window.ReactNativeWebView.postMessage("ok:" + base64.length);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.send();
 }
 </script>
 </body>
